@@ -10,33 +10,22 @@ import sys
 
 def makeChange(coins, total):
     """
-    Return: fewest number of coins needed to meet total
-            If total is 0 or less, return 0
-            If total can't be met by any number of coins u have, return -1
+    Module tries to give exact change given a list of coins with a 
+    specified values if unable to do so returns -1
     """
 
-    if total == 0:
+    if total <= 0:
         return 0
+    table = [sys.maxsize for i in range(total + 1)]
+    table[0] = 0
+    m = len(coins)
+    for i in range(1, total + 1):
+        for j in range(m):
+            if coins[j] <= i:
+                subres = table[i - coins[j]]
+                if subres != sys.maxsize and subres + 1 < table[i]:
+                    table[i] = subres + 1
 
-    coins.sort(reverse=True)
-
-    new_total = total
-    total_change = 0
-    total_value = 0
-
-    for coin in coins:
-        current_change = 0
-        if coin == new_total:
-            current_change = new_total // coin
-            total_value += current_change * coin
-            total_change += current_change
-        elif total % coin > 0:
-            current_change = new_total // coin
-            new_total = new_total % coin
-            total_value += current_change * coin
-            total_change += current_change
-
-    if total == total_value:
-        return total_change
-    else:
-        return - 1
+    if table[total] == sys.maxsize:
+        return -1
+    return table[total]
