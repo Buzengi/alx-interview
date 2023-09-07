@@ -1,6 +1,4 @@
-# :book: 0x09. Island Perimeter.
-## :page_with_curl: Topics Covered.
-Prime game interview question.
+## Prime game interview question.
 
 # :computer: Tasks.
 <!---->
